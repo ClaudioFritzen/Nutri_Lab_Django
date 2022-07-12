@@ -53,6 +53,12 @@ def pacientes(request):
             return redirect('/pacientes/')
         
 
+
+@login_required(login_url='/auth/logar/')
+def dados_paciente_listar(request, id):
+    if request.method == "GET":
+        pacientes = Pacientes.objects.filter(nutri=request.user)
+        return render(request, 'dados_pacientes_listar.html', {'pacientes': pacientes})
        
 
        
