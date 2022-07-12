@@ -1,0 +1,57 @@
+{% extends 'base_plataforma.html' %}
+{% load static %}
+
+{% block 'plataforma' %}
+
+    {% if messages %}
+        <br>
+        {% for message in messages %}
+            <div class="alert {{messages.tags}}">
+                {{message}}
+            </div>>
+        {% endfor%}
+    {% endif %}
+    <br>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <img src="{% static 'plataforma/img/perfil1.png' %}">
+        </div>
+
+        <div class="col-md-3 dados descricao">
+            <h4> {{paciente.nome}} </h4>
+            <h6> {{paciente.idade}} </h6>
+        </div>
+    </div>
+    <hr>
+
+    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modal"> Adicionar dados do paciente 
+    </button> 
+     
+    <br> 
+    <br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+
+                <th scope="col"> Peso </th>
+                <th scope="col"> Altura </th>
+                <th scope="col"> % gordura </th>
+                <th scope="col"> % músculo </th>
+
+            </tr>   
+        </thead>
+
+        <tbody>
+            <tr>
+
+                <th scope="col"> 58 kg </th>
+                <th scope="col"> 173 cm </th>
+                <th scope="col"> % 19 </th>
+                <th scope="col"> % 25 </th>
+
+            </tr>
+        </tbody>
+    </table> 
+{% endblock%} 
