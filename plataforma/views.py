@@ -73,8 +73,8 @@ def dados_paciente(request, id):
         return redirect('/dados_paciente/')
 
     if request.method == "GET":
-        
-        return render(request, 'dados_paciente.html', {'paciente': paciente })
+        dados_paciente = DadosPaciente.objects.filter(paciente=paciente)
+        return render(request, 'dados_paciente.html', {'paciente': paciente, 'dados_paciente':dados_paciente })
     elif request.method == "POST":
         peso = request.POST.get('peso')
         altura = request.POST.get('altura')
