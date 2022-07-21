@@ -1,5 +1,6 @@
+from dataclasses import dataclass
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import constants
@@ -99,6 +100,35 @@ def dados_paciente(request, id):
         messages.add_message(request, constants.SUCCESS, 'Dados cadastrado com sucesso')
 
         return redirect('/dados_paciente/')
-                
 
+from django.views.decorators.csrf import csrf_exempt
+
+@login_required(login_url='auth/logar/')
+@csrf_exempt
+def grafico_peso(request, id):
+    paciente = Pacientes.objects.get(id=id)
+    dados = DadosPaciente.objects.filter(paciente=paciente).order_by("data")
+
+    pesos = [dado.peso for dado in dados]
+    labels = list(range(len(pesos)))
+    data ={
+        'peso':pesos,
+        'labels':labels
+    }
+    return JsonResponse(data)
+
+def plano_alimentar_listar(request):
+        if request.method == "GET":
+            pacientes = Pacientes.objects.filter(nutri=request.user)
+            return render(request, 'plano_alimentar_listar.html', {'pacientes': pacientes})
+
+
+def plano_alimentar(request, id):
+    paciente = get_object_or_404(Pacientes, id=id)
+    if not paciente.nutri == request.user:
+        messages.add_message(request, constants.ERROR, 'Esse paciente não é seu')
+        return redirect('/plano_alimentar_listar/')
+    
+    if request.method == "GET":
+        return render(request, 'plano_alimentar.html', {'paciente': paciente})
        
