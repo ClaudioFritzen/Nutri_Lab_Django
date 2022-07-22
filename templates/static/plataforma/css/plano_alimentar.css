@@ -1,0 +1,28 @@
+.fundo-alimentar{
+    background-color: blue;
+    padding: 50px;
+}
+
+.refeicao{
+
+    box-shadow: 4px 4px 10px gray;
+}
+
+.head-refeicao{
+    background-color: #b0acac;
+    padding: 30px;
+    font-weight: bold;
+}
+
+.body-refeicao{
+
+    padding: 30px;
+    font-weight: bold;
+
+}
+
+.opcao{
+
+    background-color: #A8A8A8A8;
+    padding: 15px;
+}
