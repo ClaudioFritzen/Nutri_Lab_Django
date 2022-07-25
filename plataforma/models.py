@@ -1,5 +1,9 @@
-from django.db import models
+from distutils.command.upload import upload
+from email.mime import image
+from statistics import mode
+from django.db import models, IntegrityError
 from django.contrib.auth.models import User
+
 
 class Pacientes(models.Model):
     choices_sexo = (('F', 'Feminino'),
@@ -27,3 +31,22 @@ class DadosPaciente(models.Model):
 
     def __str__(self):
         return f"Paciente({self.paciente.nome}, {self.peso})"
+
+class Refeicao(models.Model):
+    paciente = models.ForeignKey(Pacientes, on_delete=models.CASCADE)
+    titulo = models.CharField(max_length=50)
+    horario = models.TimeField()
+    carboidratos = models.IntegerField()
+    proteinas = models.IntegerField()
+    gorduras = models.IntegerField()
+   
+    def __str__(self):
+        return self.titulo
+
+class Opcao(models.Model):
+    paciente = models.ForeignKey(Pacientes, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="opcao")
+    descricao = models.TextField()
+    
+    def __str__(self):
+        return self.descricao

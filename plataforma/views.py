@@ -4,7 +4,8 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages import constants
-from .models import Pacientes, DadosPaciente
+from .models import Pacientes, DadosPaciente, Refeicao
+
 from datetime import datetime
 
 # Create your views here.
@@ -130,5 +131,34 @@ def plano_alimentar(request, id):
         return redirect('/plano_alimentar_listar/')
     
     if request.method == "GET":
-        return render(request, 'plano_alimentar.html', {'paciente': paciente})
+        rl = Refeicao.objects.filter(paciente=paciente).order_by("horario")
+        return render(request, 'plano_alimentar.html', {'paciente': paciente, 'refeicao': rl})
        
+
+def refeicao(request, id_paciente):
+    paciente = get_object_or_404(Pacientes, id=id_paciente)
+    if not paciente.nutri == request.user:
+        messages.add_message(request, constants.ERROR, 'Esse paciente não é seu')
+        return redirect('/dados_pacientes/')
+
+    if request.method == "POST":
+        titulo = request.POST.get('titulo')
+        horario = request.POST.get('horario')
+        carboidratos = request.POST.get('carboidratos')
+        proteinas = request.POST.get('proteinas')
+       
+        gorduras = request.POST.get('gorduras')
+       
+
+
+        rl=Refeicao(paciente=paciente,
+                        titulo=titulo,
+                        horario=horario,
+                        carboidratos=carboidratos,
+                        proteinas=proteinas,
+                        gorduras=gorduras
+                        )
+        rl.save()
+
+        messages.add_message(request, constants.SUCCESS, 'Refeicao cadastrada com sucesso')
+        return redirect(f'/plano_alimentar/{id_paciente}')
