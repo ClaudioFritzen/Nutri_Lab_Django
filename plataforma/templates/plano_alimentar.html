@@ -43,27 +43,29 @@
 
     <div class="fundo-alimentar">
 
-        <div class="refeicao">
+        {% for re in refeicao %}
+            <div class="refeicao">
+                <div class="head-refeicao">
+                    <span> {{re.titulo}}</span>
+                    <span style="float: right;"> {{re.horario}}h</span>
+                </div>
 
-            <div class="head-refeicao">
-                <span> Café da manhã </span>
-                <span style="float: right;"> 07:00h</span>
-            </div>
+                <div class="body-refeicao">
+                    <div class="opcao">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img  width="100%" src="{% static 'plataforma/img/perfil2.png' %}" alt="">
+                            </div>
 
-            <div class="body-refeicao">
-                <div class="opcao">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img  width="100%" src="{% static 'plataforma/img/perfil2.png' %}" alt="">
-                        </div>
-
-                        <div class="col-md-10">
-                            TESTE 2
+                            <div class="col-md-10">
+                                TESTE 2
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <br>
+        {% endfor %}
     </div>
 
 
@@ -95,7 +97,7 @@
                     <br>
 
                     <div id="form-refeicao" style="display:block"> 
-                        <form action="" method="POST"> {% csrf_token %} 
+                        <form action=" {% url 'refeicao' paciente.id %} " method="POST"> {% csrf_token %} 
                             <label for="validationServerUsername"> Titulo </label>
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="EX: Café da manhã" name="titulo">
@@ -125,9 +127,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="validationServerUsername"> Gordura </label>
+                                        <label for="validationServerUsername"> Gorduras </label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="-" name="gordura">
+                                            <input type="text" class="form-control" placeholder="-" name="gorduras">
                                         </div>
                                     </div>
                                     
