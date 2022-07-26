@@ -64,7 +64,7 @@
                     </div>
                 </div>
             </div>
-        <br>
+            <br>
         {% endfor %}
     </div>
 
@@ -147,7 +147,9 @@
                             <label for="validationServerUsername"> Selecione a refeição </label>
                             <div class="input-group">
                                 <select class="form-control" name="refeicao">
-                                    <option value=""> Cafe da manha </option>
+                                    {% for re in refeicao %}
+                                        <option value="{{re.id}}">{{re.titulo}} </option>
+                                    {% endfor %}
                                 </select>   
                             </div>
 

@@ -162,3 +162,6 @@ def refeicao(request, id_paciente):
 
         messages.add_message(request, constants.SUCCESS, 'Refeicao cadastrada com sucesso')
         return redirect(f'/plano_alimentar/{id_paciente}')
+
+def opcao(request):
+    pass
